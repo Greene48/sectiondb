@@ -183,7 +183,7 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the HTML file
     wiredep: {
       task: {
-        src: ['<%= config.app %>/index.html'],
+        src: ['index.html'],
         exclude: ['bootstrap.js'],
         ignorePath: /^(\.\.\/)*\.\./
       }
