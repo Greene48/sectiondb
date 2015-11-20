@@ -26,7 +26,8 @@
     <![endif]-->
 
     
-    <div class="container">
+  <div class="container">
+  <div class="row">
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="#">Home</a></li>
@@ -37,34 +38,40 @@
       </div>
 
       <div id="demo" class="row marketing">
-        <input v-model="query">
-        <select v-model="selected" @change="data_load">
-          <option v-for="option in section_types" :value="option.value">
-              {{ option.text }}
-          </option>
-        </select>
-        <table class="vu-table">
-          <thead>
-            <tr>
-              <th v-for="head in columns">
-                {{head}}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in section_list | filterBy query in 'Designation'">
-              <td v-for="head in columns">
+        <div class="col-md-2">
+            <select size="3" v-model="selected" @change="data_load">
+              <option v-for="option in section_types" :value="option.value">
+                {{ option.text }}
+              </option>
+            </select>
+        </div>
+        
+        <div class="col-md-10">  
+          <input v-model="query">
+          <table class="vu-table">
+            <thead>
+              <tr>
+                <th v-for="head in columns">
+                  {{head}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in section_list | filterBy query in 'Designation'">
+                <td v-for="head in columns">
                   {{item[head]}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
       </div>
-    </div>
+  </div>    
+  </div>
     
 
     <!-- build:js(.) scripts/vendor.js -->
