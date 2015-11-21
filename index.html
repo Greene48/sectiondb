@@ -38,7 +38,7 @@
             <select id="section_select" class="form-control" size="8" v-model="selected" @change="data_load">
               <option disabled>European</option>
               <option v-for="option in section_types" :value="option.value">
-              {{ option.text }}
+                {{option.text}}
               </option>
             </select>
         </div>
@@ -62,9 +62,8 @@
                         </tr>
                     </tbody>
                 </table>
-                {{sortOrders[Mass]}}
         </div>
-        </div>
+      </div>
 
       <div class="footer">
         <p><i class="fa fa-code"></i> by Mantis Software</p>

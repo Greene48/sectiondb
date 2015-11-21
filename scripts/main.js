@@ -188,7 +188,6 @@ var vm = new Vue({
 		query: '',
 		sortKey: '',
 		sortOrders: {},
-		testkey: 'test',
 		columns: ['Designation', 'Mass', 'Section Depth', 'Section Width'],
 		selected: 'HE',
 		section_types: [
@@ -218,3 +217,5 @@ var vm = new Vue({
 		}
 	}
 })
+
+
