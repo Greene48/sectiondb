@@ -1,5 +1,3 @@
-console.log('\'Allo \'Allo!'); // eslint-disable-line no-console
-
 var store = {
 	state: {
 		HE: [
@@ -184,12 +182,14 @@ var store = {
 	},
 }
 
-
-new Vue({
+var vm = new Vue({
 	el: '#demo',
 	data: {
 		query: '',
-		columns: ['Designation', 'Mass', 'Section Depth', 'Section Width', 'Web Thickness', 'Flange Thickness'],
+		sortKey: '',
+		sortOrders: {},
+		testkey: 'test',
+		columns: ['Designation', 'Mass', 'Depth', 'Section Width'],
 		selected: 'HE',
 		section_types: [
 			{ text: 'HE Sections', value: 'HE' },
@@ -197,10 +197,24 @@ new Vue({
 		],
 		section_list: store.state.HE
 	},
+	ready: function() {
+		this.initialOrder();
+	},
 	methods: {
 		data_load: function () {
-			var key = this.selected
-			this.section_list = store.state[key];
+			var sel = this.selected
+			this.section_list = store.state[sel];
+		},
+		initialOrder: function () {
+			var sortOrdersVar = {}
+			this.columns.forEach(function (key) {
+				sortOrdersVar[key] = 1
+			})
+			this.sortOrders = sortOrdersVar
+		},
+		sortBy: function (head) {
+			this.sortKey = head
+			this.sortOrders[head] = this.sortOrders[head] * -1
 		}
 	}
 })
