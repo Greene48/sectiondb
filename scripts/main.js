@@ -211,9 +211,10 @@ var vm = new Vue({
     this.initialOrder();
   },
   methods: {
-    data_load: function() {
-      var sel = this.selected
-      this.section_list = store.state[sel];
+    data_load: function(option) {
+      var sel = option
+      this.section_list = store.state[sel]
+      this.selected = option
     },
     initialOrder: function() {
       var sortOrdersVar = {}

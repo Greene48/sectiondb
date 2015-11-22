@@ -48,12 +48,12 @@
 }
 
 #section_select{
-    overflow: hidden;
     margin-top: 54px;
-    border-radius: 0;
+    cursor:pointer;
 }
 
-#section_select{
+#section_select .active {
+    background-color: #74C365;
     border-color: #74C365;
 }
 
@@ -63,7 +63,7 @@
 }
 
 th.active {
-  background-color: #f2f2f2;
+  background-color: #ECECEC;
 }
 
 th.active .arrow {
@@ -89,4 +89,14 @@ th.active .arrow {
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 4px solid #74C365;
+}
+
+
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+
+select:-internal-list-box:focus option:checked {
+  backgroud-color: #74C365;
 }

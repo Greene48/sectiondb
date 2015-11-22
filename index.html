@@ -25,54 +25,51 @@
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     
-  <div class="container">
+ <div class="container">
   <div class="row">
-      <div class="header">
-        <h3 class="text-muted">sectiondb</h3>
-      </div>
-
-      <div id="demo" class="row marketing">
-        <div class="col-md-2 thinner">
-            <select id="section_select" class="form-control" size="8" v-model="selected" @change="data_load">
-              <option disabled>European</option>
-              <option v-for="option in section_types" :value="option.value">
-                {{option.text}}
-              </option>
-            </select>
-        </div>
-        
-        <div class="col-md-10 thinner">  
-        <input id="search_input" class="form-control" placeholder="Search" v-model="query">
-                <table class="vu-table">
-                    <thead>
-                        <tr>
-                            <th v-for="head in columns" @click="sortBy(head)" :class="{active: sortKey == head}">
-                                {{column_values[head]}}
-                                <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey]">
-                            <td v-for="head in columns">
-                                {{item[head]}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-        </div>
-      </div>
-
-      <div class="footer">
-        <p><i class="fa fa-code"></i> by Mantis Software</p>
-      </div>
-      </div>    
+    <div class="header">
+      <h3 class="text-muted">sectiondb</h3>
     </div>
-    
-    
 
+    <div id="demo" class="row marketing">
+      <div id="section_select" class="col-md-2 thinner">
+        <div class="list-group">
+          <a v-for="option in section_types" class="list-group-item" :class="{active: selected == option.value}" v-on:click="data_load(option.value)">
+              {{option.text}}
+            </a>
+        </div>
+      </div>
+
+      <div class="col-md-10 thinner">
+        <input type="search" id="search_input" class="form-control" placeholder="Search" v-model="query">
+        <table class="vu-table">
+          <thead>
+            <tr>
+              <th v-for="head in columns" @click="sortBy(head)" :class="{active: sortKey == head}">
+                {{column_values[head]}}
+                <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey]">
+              <td v-for="head in columns">
+                {{item[head]}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p><i class="fa fa-code"></i> by Mantis Software</p>
+    </div>
+  </div>
+</div>
+    
+    
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     
