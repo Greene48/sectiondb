@@ -33,6 +33,17 @@
 
 .vu-table tr {
     border-bottom: 1px solid #d0d0d0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -user-select: none;
+}
+
+.vu-body tr {
+    cursor: pointer;
+}
+
+.vu-body tr:hover {
+    background-color: #ECECEC;
 }
 
 #search_input {
@@ -99,4 +110,54 @@ input[type="search"]::-webkit-search-cancel-button {
 
 select:-internal-list-box:focus option:checked {
   backgroud-color: #74C365;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+.modal-enter, .modal-leave {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave .modal-container {
+  -webkit-transform: scale(1.5,1.5);
+  transform: scale(1.5,1.5);
 }
