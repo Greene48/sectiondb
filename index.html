@@ -49,7 +49,7 @@
                     <thead>
                         <tr>
                             <th v-for="head in columns" @click="sortBy(head)" :class="{active: sortKey == head}">
-                                {{head}}
+                                {{column_values[head]}}
                                 <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span>
                             </th>
                         </tr>

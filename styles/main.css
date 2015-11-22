@@ -21,6 +21,9 @@
     padding: 8px;
     border: none;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -user-select: none;
 }
 
 .vu-table td {
@@ -50,7 +53,7 @@
     border-radius: 0;
 }
 
-#section_select:focus {
+#section_select{
     border-color: #74C365;
 }
 
