@@ -507,6 +507,21 @@ var vm = new Vue({
       xPlasticModulus: "x-x Plastic Modulus",
       yPlasticModulus: "y-y Plastic Modulus"
     },
+    column_symbols: {
+      Designation: "Designation",
+      Mass: "Mass",
+      SectionDepth: "Depth",
+      SectionWidth: "Width",
+      WebThickness: "Web",
+      FlangeThickness: "Flange",
+      SectionArea: "Area",
+      xMomentInertia: "I<sub>x</sub>",
+      yMomentInertia: "I<sub>y</sub>",
+      xElasticModulus: "S<sub>x</sub>",
+      yElasticModulus: "S<sub>y</sub>",
+      xPlasticModulus: "Z<sub>x</sub>",
+      yPlasticModulus: "Z<sub>y</sub>"
+    },
     modal_values: {},
     euro_sections: [{
       text: 'HE Sections',

@@ -26,7 +26,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     
- <div class="container">
+<div class="container">
   <div class="row">
     <div class="header">
       <h3 class="text-muted">sectiondb</h3>
@@ -56,8 +56,9 @@
           <thead>
             <tr>
               <th v-for="head in columns" @click="sortBy(head)" :class="{active: sortKey == head}">
-                {{column_values[head]}}
-                <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span>
+                {{{column_symbols[head]}}}
+                <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span></br>
+                <span class="thead_units">{{{units[head]}}}</span>
               </th>
             </tr>
           </thead>
