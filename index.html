@@ -33,12 +33,21 @@
     </div>
 
     <div id="demo" class="row marketing">
-      <div id="section_select" class="col-md-2 thinner">
-        <div class="list-group">
-          <a v-for="option in section_types" class="list-group-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
+      <div class="col-md-2 thinner">
+        <ul id="section_select" class="nav nav-pills nav-stacked">
+          <li class="section-family" @click="can_show()">Canadian<span class=" expand fa" :class="showCan ? 'fa-minus' : 'fa-plus'"></span></li>
+          <li v-show="showCan" transition="sections" v-for="option in can_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
               {{option.text}}
-            </a>
-        </div>
+          </a></li>
+          <li class="section-family" @click="euro_show()">European<span class=" expand fa" :class="showEuro ? 'fa-minus' : 'fa-plus'"></span></li>
+          <li v-show="showEuro" transition="sections" v-for="option in euro_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
+              {{option.text}}
+          </a></li>
+          <li class="section-family" @click="brit_show()">British<span class=" expand fa" :class="showBrit ? 'fa-minus' : 'fa-plus'"></span></li>
+          <li v-show="showBrit" transition="sections" v-for="option in brit_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
+              {{option.text}}
+          </a></li>
+        </ul>
       </div>
 
       <div class="col-md-10 thinner">
@@ -67,19 +76,25 @@
 
             <div class="modal-header">
               <button type="button" class="close" aria-label="Close" @click="showModal = false"><span aria-hidden="true">&times;</span></button>
-              <slot name="header">
+              <h4 name="header" class="modal-title">
                 {{modal_values["Designation"]}}
-              </slot>
+              </h4>
             </div>
 
             <div class="modal-body">
+              <span id="beam"></span>
+              <div class="modal-values" align="right">
               <slot v-for="head in columns" name="body">
-                <p>{{column_values[head]}} = {{modal_values[head]}} {{units[head]}}</p>
+                <p>{{column_values[head]}} = {{modal_values[head]}} {{{units[head]}}}</p>
               </slot>
+              </div>
             </div>
 
             <div class="modal-footer">
               <slot name="footer">
+                <button class="modal-default-button btn btn-default" @click="print()">
+                  Print
+                </button>
                 <button class="modal-default-button btn btn-default" @click="showModal = false">
                   OK
                 </button>
