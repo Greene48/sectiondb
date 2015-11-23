@@ -2,6 +2,10 @@ body: {
   font-family: 'Roboto', sans-serif;
 }
 
+#demo {
+  display: none;
+}
+
 .footer {
   float: right;
 }

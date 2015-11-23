@@ -557,6 +557,7 @@ var vm = new Vue({
   },
   ready: function() {
     this.initialOrder();
+    $('#demo').css('display', 'block');
   },
   methods: {
     data_load: function(option) {
