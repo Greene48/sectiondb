@@ -966,6 +966,7 @@ var vm = new Vue({
       this.tableLength = this.section_list.length
       this.pageKey = 0
       this.offsetKey = this.pageKey * this.limitKey
+      this.lastPage = Math.floor(this.tableLength/this.limitKey)
     },
     initialOrder: function() {
       var sortOrdersVar = {}
