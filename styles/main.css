@@ -2,7 +2,7 @@ body: {
   font-family: 'Roboto', sans-serif;
 }
 
-#demo {
+[v-cloak] {
   display: none;
 }
 
@@ -90,6 +90,11 @@ th:nth-child(n+2), td:nth-child(n+2) {
     -webkit-user-select: none;
     -moz-user-select: none;
     -user-select: none;
+}
+
+.section-family:hover {
+    -webkit-animation: pulse 2s;
+    animation: pulse 2s;
 }
 
 .list-item {

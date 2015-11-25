@@ -18,6 +18,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
@@ -32,10 +33,10 @@
       <h3 class="text-muted">sectiondb</h3>
     </div>
 
-    <div id="demo" class="row marketing">
+    <div id="demo" class="row marketing" v-cloak>
       <div class="col-md-2 thinner">
         <ul id="section_select" class="nav nav-pills nav-stacked">
-          <li class="section-family" @click="can_show()">Canadian<span class=" expand fa" :class="showCan ? 'fa-minus' : 'fa-plus'"></span></li>
+          <li class="section-family" @click="can_show()">Canadian<span class="expand fa" :class="showCan ? 'fa-minus' : 'fa-plus'"></span></li>
           <li v-show="showCan" transition="sections" v-for="option in can_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
               {{option.text}}
           </a></li>
@@ -63,7 +64,7 @@
             </tr>
           </thead>
           <tbody class="vu-body">
-            <tr class="vu-row" v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey]" @click="loadModal(item)">
+            <tr class="vu-row" v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey] | limitBy 5" @click="loadModal(item)">
               <td v-for="head in columns">
                 {{item[head]}}
               </td>
