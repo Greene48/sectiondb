@@ -64,7 +64,7 @@
             </tr>
           </thead>
           <tbody class="vu-body">
-            <tr class="vu-row" v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey] | limitBy 5" @click="loadModal(item)">
+            <tr class="vu-row" v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey] | limitBy 25" @click="loadModal(item)">
               <td v-for="head in columns">
                 {{item[head]}}
               </td>
