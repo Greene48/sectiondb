@@ -56,7 +56,7 @@
         <table class="vu-table">
           <thead>
             <tr>
-              <th v-for="head in columns" @click="sortBy(head)" :class="{active: sortKey == head}">
+              <th v-for="head in columns" @click="sortBy(head)" class="col-md-1" :class="{active: sortKey == head}" nowrap>
                 {{{column_symbols[head]}}}
                 <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span></br>
                 <span class="thead_units">{{{units[head]}}}</span>
@@ -64,13 +64,28 @@
             </tr>
           </thead>
           <tbody class="vu-body">
-            <tr class="vu-row" v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey] | limitBy 25" @click="loadModal(item)">
+            <tr class="vu-row" v-for="item in section_list | filterBy query in 'Designation' | orderBy sortKey sortOrders[sortKey] | limitBy limitKey offsetKey" @click="loadModal(item)">
               <td v-for="head in columns">
-                {{item[head]}}
+                {{item[head] | exponent}}
               </td>
             </tr>
           </tbody>
         </table>
+        <div class="col-md-6 table-pagination">
+          <p class="page-count">
+          Page {{pageKey+1}} of {{lastPage+1}}
+          </p>
+        </div>
+        <div class="col-md-6 table-pagination">
+        <div class="list-button-container">
+        <button class="list-button btn btn-default" :class="{disabled: pageKey == 0}" @click="prevPage()">
+          Prev
+        </button>
+        <button class="list-button btn btn-default" :class="{disabled: pageKey == lastPage}" @click="nextPage()">
+          Next
+        </button>
+        </div>
+        </div>
       </div>
       <div class="modal-mask" v-show="showModal" transition="modal">
         <div class="modal-wrapper">

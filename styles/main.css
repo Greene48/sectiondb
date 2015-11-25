@@ -8,6 +8,7 @@ body: {
 
 .footer {
   float: right;
+  margin-top: 20px;
 }
 
 .text-muted {
@@ -44,7 +45,7 @@ th:nth-child(n+2), td:nth-child(n+2) {
 }
 
 .vu-table td {
-    padding: 8px;
+    padding: 4px;
     border: none;
 }
 
@@ -92,9 +93,10 @@ th:nth-child(n+2), td:nth-child(n+2) {
     -user-select: none;
 }
 
-.section-family:hover {
-    -webkit-animation: pulse 2s;
-    animation: pulse 2s;
+.section-family:hover > .expand {
+    -webkit-animation: swing 1s;
+    animation: swing 1s;
+    color: #1bc98e;
 }
 
 .list-item {
@@ -269,4 +271,37 @@ input[type="search"]::-webkit-search-cancel-button {
 .thead_units {
   font-size: 12px;
   color: #525252;
+}
+
+.list-button {
+  margin-left: 5px;
+}
+
+.list-button-container {
+  float: right;
+  margin-top: 10px;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #1bc98e;
+}
+
+.btn-default:hover {
+    color: #ffffff;
+    background-color: #1bc98e;
+    border-color: #1bc98e;
+}
+
+.btn-default.disabled:hover {
+    color: #333;
+}
+
+.table-pagination {
+  padding: 0;
+}
+
+.page-count {
+  margin-top: 10px;
 }

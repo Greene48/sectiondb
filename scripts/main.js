@@ -174,7 +174,7 @@ var store = {
 			{"Designation":"IPE 750 x 147","Mass":147.2,"SectionDepth":753,"SectionWidth":265,"WebThickness":13.2,"FlangeThickness":17,"Root Radius":17,"Depth between Fillets":685,"Flange Buckling Ratio":7.79,"Web Buckling Ratio":51.9,"xMomentInertia":166100,"yMomentInertia":5289,"xRadiusGyration":29.8,"yRadiusGyration":5.31,"xElasticModulus":4411,"yElasticModulus":399,"xPlasticModulus":5110,"yPlasticModulus":631,"Buckling Parameter":0.854,"Torsional Index":45.5,"Warping Constant":7.16,"TorsionalConstant":157,"SectionArea":187},
 			{"Designation":"IPE 750 x 161","Mass":160.5,"SectionDepth":758,"SectionWidth":266,"WebThickness":13.8,"FlangeThickness":19.3,"Root Radius":17,"Depth between Fillets":685.4,"Flange Buckling Ratio":6.89,"Web Buckling Ratio":49.7,"xMomentInertia":186100,"yMomentInertia":6073,"xRadiusGyration":30.2,"yRadiusGyration":5.45,"xElasticModulus":4909,"yElasticModulus":457,"xPlasticModulus":5666,"yPlasticModulus":720,"Buckling Parameter":0.859,"Torsional Index":41.5,"Warping Constant":8.28,"TorsionalConstant":208,"SectionArea":204},
 			{"Designation":"IPE 750 x 174","Mass":173.7,"SectionDepth":762,"SectionWidth":267,"WebThickness":14.4,"FlangeThickness":21.6,"Root Radius":17,"Depth between Fillets":684.8,"Flange Buckling Ratio":6.18,"Web Buckling Ratio":47.6,"xMomentInertia":205800,"yMomentInertia":6873,"xRadiusGyration":30.5,"yRadiusGyration":5.57,"xElasticModulus":5402,"yElasticModulus":515,"xPlasticModulus":6218,"yPlasticModulus":810,"Buckling Parameter":0.864,"Torsional Index":37.9,"Warping Constant":9.42,"TorsionalConstant":270,"SectionArea":221},
-			{"Designation":"IPE 750 x185","Mass":185,"SectionDepth":766,"SectionWidth":267,"WebThickness":14.9,"FlangeThickness":23.6,"Root Radius":17,"Depth between Fillets":684.8,"Flange Buckling Ratio":5.66,"Web Buckling Ratio":46,"xMomentInertia":223000,"yMomentInertia":7510,"xRadiusGyration":30.8,"yRadiusGyration":5.65,"xElasticModulus":5821,"yElasticModulus":563,"xPlasticModulus":6691,"yPlasticModulus":884,"Buckling Parameter":0.867,"Torsional Index":35.3,"Warping Constant":10.3,"TorsionalConstant":334,"SectionArea":236},
+			{"Designation":"IPE 750 x 185","Mass":185,"SectionDepth":766,"SectionWidth":267,"WebThickness":14.9,"FlangeThickness":23.6,"Root Radius":17,"Depth between Fillets":684.8,"Flange Buckling Ratio":5.66,"Web Buckling Ratio":46,"xMomentInertia":223000,"yMomentInertia":7510,"xRadiusGyration":30.8,"yRadiusGyration":5.65,"xElasticModulus":5821,"yElasticModulus":563,"xPlasticModulus":6691,"yPlasticModulus":884,"Buckling Parameter":0.867,"Torsional Index":35.3,"Warping Constant":10.3,"TorsionalConstant":334,"SectionArea":236},
 			{"Designation":"IPE 750 x 197","Mass":196.9,"SectionDepth":770,"SectionWidth":268,"WebThickness":15.6,"FlangeThickness":25.4,"Root Radius":17,"Depth between Fillets":685.2,"Flange Buckling Ratio":5.28,"Web Buckling Ratio":43.9,"xMomentInertia":240300,"yMomentInertia":8175,"xRadiusGyration":31,"yRadiusGyration":5.71,"xElasticModulus":6241,"yElasticModulus":610,"xPlasticModulus":7174,"yPlasticModulus":959,"Buckling Parameter":0.869,"Torsional Index":33.1,"Warping Constant":11.3,"TorsionalConstant":406,"SectionArea":251},
 			{"Designation":"IPE 750 x 210","Mass":210.1,"SectionDepth":775,"SectionWidth":268,"WebThickness":16,"FlangeThickness":28,"Root Radius":17,"Depth between Fillets":685,"Flange Buckling Ratio":4.79,"Web Buckling Ratio":42.8,"xMomentInertia":262200,"yMomentInertia":9011,"xRadiusGyration":31.3,"yRadiusGyration":5.8,"xElasticModulus":6765,"yElasticModulus":672,"xPlasticModulus":7762,"yPlasticModulus":1054,"Buckling Parameter":0.874,"Torsional Index":30.6,"Warping Constant":12.6,"TorsionalConstant":512,"SectionArea":268},
 			{"Designation":"IPE 750 x 223","Mass":222.5,"SectionDepth":778,"SectionWidth":269,"WebThickness":17,"FlangeThickness":29.5,"Root Radius":17,"Depth between Fillets":685,"Flange Buckling Ratio":4.56,"Web Buckling Ratio":40.3,"xMomentInertia":278200,"yMomentInertia":9604,"xRadiusGyration":31.3,"yRadiusGyration":5.82,"xElasticModulus":7152,"yElasticModulus":714,"xPlasticModulus":8225,"yPlasticModulus":1122,"Buckling Parameter":0.873,"Torsional Index":29.1,"Warping Constant":13.5,"TorsionalConstant":601,"SectionArea":283}
@@ -835,12 +835,25 @@ var store = {
 	},
 }
 
+Vue.filter('exponent', function (value) {
+  if (isNaN(value) || value < 10000 ) {
+    return value
+  } else {
+    return value.toExponential();  
+  }
+})
+
 var vm = new Vue({
   el: '#demo',
   data: {
     query: '',
     sortKey: 'Designation',
     sortOrders: {},
+    pageKey: 0,
+    limitKey: 25,
+    offsetKey: 0,
+    tableLength: store.state.canW.length,
+    lastPage: 1,
     selected: 'canW',
     showModal: false,
     showEuro: false,
@@ -879,7 +892,7 @@ var vm = new Vue({
       yPlasticModulus: "y-y Plastic Modulus"
     },
     column_symbols: {
-      Designation: "Designation",
+      Designation: "Section",
       Mass: "Mass",
       SectionDepth: "Depth",
       SectionWidth: "Width",
@@ -943,14 +956,16 @@ var vm = new Vue({
   },
   ready: function() {
     this.initialOrder();
-    //$('#demo').css('display', 'block');
+    this.lastPage = Math.floor(this.tableLength/this.limitKey)
   },
   methods: {
     data_load: function(option) {
       var sel = option
-      this.section_list = store.state[sel]
       this.selected = option
-      console.log(store.state[sel])
+      this.section_list = store.state[sel]
+      this.tableLength = this.section_list.length
+      this.pageKey = 0
+      this.offsetKey = this.pageKey * this.limitKey
     },
     initialOrder: function() {
       var sortOrdersVar = {}
@@ -996,6 +1011,18 @@ var vm = new Vue({
         this.showBrit = false
       } else { 
         this.showBrit = true
+      }
+    },
+    nextPage: function(head) {
+      if (this.pageKey < this.lastPage) {
+        this.pageKey++
+        this.offsetKey = this.pageKey * this.limitKey
+      }
+    },
+    prevPage: function(head) {
+      if (this.pageKey > 0) {
+        this.pageKey--
+        this.offsetKey = this.pageKey * this.limitKey  
       }
     }
   }
