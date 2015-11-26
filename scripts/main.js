@@ -859,6 +859,7 @@ var vm = new Vue({
     showCan: true,
     showBrit: false,
     modal_image: 'beam',
+    modal_title: '',
     section_images: {
       beam: "img/I-Beam.png",
       angle: "img/Angle.png",
@@ -995,6 +996,7 @@ var vm = new Vue({
     loadModal: function(item) {
       var modalVar = {}
       this.modal_image = item.Shape
+      this.modal_title = item.Designation
       this.modal_rows.forEach(function(key) {
         modalVar[key] = item[key]
       })
