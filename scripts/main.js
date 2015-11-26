@@ -955,10 +955,10 @@ var vm = new Vue({
   computed: {
     lastPage: function() {
       return Math.floor(this.tableLength/this.limitKey);
-    },
+    }
+	},
   ready: function() {
     this.initialOrder();
-  }
   },
   methods: {
     data_load: function(option) {
