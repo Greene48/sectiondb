@@ -995,7 +995,7 @@ var vm = new Vue({
     loadModal: function(item) {
       var modalVar = {}
       this.modal_image = item.Shape
-      this.columns.forEach(function(key) {
+      this.modal_rows.forEach(function(key) {
         modalVar[key] = item[key]
       })
       this.modal_values = modalVar
