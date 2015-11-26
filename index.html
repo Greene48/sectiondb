@@ -99,12 +99,41 @@
             </div>
 
             <div class="modal-body">
-              <span id="beam"></span>
-              <div class="modal-values" align="right">
-              <slot v-for="head in columns" name="body">
-                <p>{{column_values[head]}} = {{modal_values[head]}} {{{units[head]}}}</p>
-              </slot>
-              </div>
+              <img src="{{section_images[modal_image]}}">
+              
+              <table class="vu-table">
+                <thead>
+                  <tr>
+                    <th class="col-md-6">
+                      Parameter
+                    </th>
+                    <th class="col-md-2">
+                    </th>
+                    <th class="col-md-2">
+                      Value
+                    </th>
+                    <th class="col-md-2">
+                      Unit
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="head in modal_rows">
+                    <td>
+                      {{column_values[head]}}
+                    </td>
+                    <td>
+                      {{{column_symbols[head]}}} =
+                    </td>
+                    <td>
+                      {{modal_values[head]}}
+                    </td>
+                    <td>
+                      {{{units[head]}}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>         
             </div>
 
             <div class="modal-footer">
