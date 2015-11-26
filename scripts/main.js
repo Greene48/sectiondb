@@ -850,7 +850,7 @@ var vm = new Vue({
     sortKey: 'Mass',
     sortOrders: {},
     pageKey: 0,
-    limitKey: 3,
+    limitKey: 25,
     offsetKey: 0,
     tableLength: store.state.canW.length,
     selected: 'canW',
