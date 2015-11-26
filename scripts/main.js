@@ -839,7 +839,7 @@ Vue.filter('exponent', function (value) {
   if (isNaN(value) || value < 10000 ) {
     return value
   } else {
-    return value.toExponential();  
+    return value.toExponential(2);  
   }
 })
 
@@ -847,19 +847,17 @@ var vm = new Vue({
   el: '#demo',
   data: {
     query: '',
-    sortKey: 'Designation',
+    sortKey: 'Mass',
     sortOrders: {},
     pageKey: 0,
-    limitKey: 25,
+    limitKey: 3,
     offsetKey: 0,
     tableLength: store.state.canW.length,
-    lastPage: 1,
     selected: 'canW',
     showModal: false,
     showEuro: false,
     showCan: true,
     showBrit: false,
-    exponentVar: '',
     columns: ['Designation', 'Mass', 'SectionDepth', 'SectionWidth', 'WebThickness', 'FlangeThickness', 'SectionArea', 'xMomentInertia', 'yMomentInertia', 'xElasticModulus', 'yElasticModulus', 'xPlasticModulus', 'yPlasticModulus'],
     units: {
       Designation: "",
@@ -954,9 +952,13 @@ var vm = new Vue({
                    ],
     section_list: store.state.canW
   },
+  computed: {
+    lastPage: function() {
+      return Math.floor(this.tableLength/this.limitKey);
+    },
   ready: function() {
     this.initialOrder();
-    this.lastPage = Math.floor(this.tableLength/this.limitKey)
+  }
   },
   methods: {
     data_load: function(option) {
@@ -966,7 +968,6 @@ var vm = new Vue({
       this.tableLength = this.section_list.length
       this.pageKey = 0
       this.offsetKey = this.pageKey * this.limitKey
-      this.lastPage = Math.floor(this.tableLength/this.limitKey)
     },
     initialOrder: function() {
       var sortOrdersVar = {}
