@@ -843,6 +843,14 @@ Vue.filter('exponent', function (value) {
   }
 })
 
+Vue.filter('exponent', function (value) {
+  if (isNaN(value) || value < 10000 ) {
+    return value
+  } else {
+    return value.toExponential(2);  
+  }
+})
+
 var vm = new Vue({
   el: '#demo',
   data: {
@@ -956,7 +964,7 @@ var vm = new Vue({
     lastPage: function() {
       return Math.floor(this.tableLength/this.limitKey);
     }
-	},
+  },
   ready: function() {
     this.initialOrder();
   },
