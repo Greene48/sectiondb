@@ -36,7 +36,6 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
     <link rel="stylesheet" href="styles/main.css">
@@ -47,39 +46,58 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     
-<div class="container">
-  <div class="row">
-    <div class="header">
-      <h3 class="text-muted">sectiondb</h3>
-    </div>
-
-    <div id="demo" class="row marketing" v-cloak>
-      <div class="col-md-2 thinner">
-        <ul id="section_select" class="nav nav-pills nav-stacked">
-          <li class="section-family" @click="can_show()">Canadian<span class="expand fa" :class="showCan ? 'fa-minus' : 'fa-plus'"></span></li>
-          <li v-show="showCan" transition="sections" v-for="option in can_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
-              {{option.text}}
-          </a></li>
-          <li class="section-family" @click="euro_show()">European<span class=" expand fa" :class="showEuro ? 'fa-minus' : 'fa-plus'"></span></li>
-          <li v-show="showEuro" transition="sections" v-for="option in euro_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
-              {{option.text}}
-          </a></li>
-          <li class="section-family" @click="brit_show()">British<span class=" expand fa" :class="showBrit ? 'fa-minus' : 'fa-plus'"></span></li>
-          <li v-show="showBrit" transition="sections" v-for="option in brit_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
-              {{option.text}}
-          </a></li>
+<div id="demo" class="window">
+ 
+  <header class="toolbar toolbar-header">
+    <h1 class="title">sectiondb</h1>
+    <div class="toolbar-actions">
+    <div class="btn-group">
+      <button class="btn btn-default">
+        <span class="fa fa-plus"></span>
+      </button>
+      <button class="btn btn-default">
+        <span class="fa fa-folder"></span>
+      </button>
+      <button class="btn btn-default">
+        <span class="fa fa-cloud"></span>
+      </button>
+      <div class="btn-group" v-bind:class="{open:showDrop}">
+        <button type="button" class="btn btn-default dropdown-toggle" @click="toggleDropDown" @blur="showDrop = false"> <span class="fa fa-columns"></span></button>
+        <ul class="dropdown-menu">
+          <li v-for="option in allColumns"><a @mousedown.prevent="dropListClick(option)">{{option}}<span :class="['fa', chosen[option] ? 'fa-check-square-o' : 'fa-square-o']"></span></a></li>
         </ul>
       </div>
+    </div>
+    <input type="search" id="search_input" class="form-control" placeholder="Search" v-model="query">
+    </div>
+  </header>
+  <div v-cloak class="window-content">
+    <div class="pane-group">
+      <div class="pane-sm sidebar">
+        <nav id="section_select" class="nav nav-pills nav-stacked">
+          <h5 class="section-family" @click="can_show()">Canadian<span class="expand fa" :class="showCan ? 'fa-minus' : 'fa-plus'"></span></h5>
+          <span v-show="showCan" transition="sections" v-for="option in can_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
+              {{option.text}}
+          </a></span>
+          <h5 class="section-family" @click="euro_show()">European<span class=" expand fa" :class="showEuro ? 'fa-minus' : 'fa-plus'"></span></h5>
+          <span v-show="showEuro" transition="sections" v-for="option in euro_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
+              {{option.text}}
+          </a></span>
+          <h5 class="section-family" @click="brit_show()">British<span class=" expand fa" :class="showBrit ? 'fa-minus' : 'fa-plus'"></span></h5>
+          <span v-show="showBrit" transition="sections" v-for="option in brit_sections" role="presentation"><a class="list-item" :class="{active: selected == option.value}" @click="data_load(option.value)">
+              {{option.text}}
+          </a></span>
+        </nav>
+      </div>
 
-      <div class="col-md-10 thinner">
-        <input type="search" id="search_input" class="form-control" placeholder="Search" v-model="query">
+      <div class="pane">
         <table class="vu-table">
           <thead>
             <tr>
-              <th v-for="head in columns" @click="sortBy(head)" class="col-md-1" :class="{active: sortKey == head}" nowrap>
+              <th v-for="head in columns" @click="sortBy(head)" :class="{active: sortKey == head}" nowrap>
                 {{{column_symbols[head]}}}
-                <span class="arrow" :class="sortOrders[head] > 0 ? 'asc' : 'dsc'"></span></br>
-                <span class="thead_units">{{{units[head]}}}</span>
+                <span class="thead_units">{{{units[head] | brackets $index}}}</span>
+                <span :class="['arrow', sortOrders[head] > 0 ? 'asc' : 'dsc']"></span>
               </th>
             </tr>
           </thead>
@@ -91,12 +109,11 @@
             </tr>
           </tbody>
         </table>
-        <div class="col-md-6 table-pagination">
+        <div class="table-pagination">
           <p class="page-count">
           Page {{pageKey+1}} of {{lastPage+1}}
           </p>
         </div>
-        <div class="col-md-6 table-pagination">
         <div class="list-button-container">
         <button class="list-button btn btn-default" :class="{disabled: pageKey == 0}" @click="prevPage()">
           Prev
@@ -104,7 +121,6 @@
         <button class="list-button btn btn-default" :class="{disabled: pageKey == lastPage}" @click="nextPage()">
           Next
         </button>
-        </div>
         </div>
       </div>
       <div class="modal-mask" v-show="showModal" transition="modal">
@@ -114,7 +130,7 @@
             <div class="modal-header">
               <button type="button" class="close" aria-label="Close" @click="showModal = false"><span aria-hidden="true">&times;</span></button>
               <h4 name="header" class="modal-title">
-                {{modal_title}}
+                {{modal_values["Designation"]}}
               </h4>
             </div>
 
@@ -172,11 +188,11 @@
 
 
     </div>
-
-    <div class="footer">
-      <p><i class="fa fa-code"></i> by Mantis Software</p>
-    </div>
   </div>
+  <footer class="toolbar toolbar-footer">
+    <div class="footer-signature"><i class="fa fa-code"></i> by Mantis Software</div>
+  </footer>
+  
 </div>
     
     
@@ -193,8 +209,6 @@
     
 
     <!-- build:js scripts/main.js -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.8/vue.min.js"></script>
     <script src="scripts/main.js"></script>
     <!-- endbuild -->

@@ -843,6 +843,15 @@ Vue.filter('exponent', function (value) {
   }
 })
 
+Vue.filter('brackets', function (value, index) {
+  if (index === 0 ) {
+    return value
+  } else {
+	  var newValue = '(' + value + ')' 
+    return newValue;  
+  }
+})
+
 var vm = new Vue({
   el: '#demo',
   data: {
@@ -854,19 +863,20 @@ var vm = new Vue({
     offsetKey: 0,
     tableLength: store.state.canW.length,
     selected: 'canW',
+    showDrop: false,
     showModal: false,
     showEuro: false,
     showCan: true,
     showBrit: false,
     modal_image: 'beam',
-    modal_title: '',
     section_images: {
       beam: "img/I-Beam.png",
       angle: "img/Angle.png",
-      channel: "img/Channel.png",
-      round: "img/Round.png",
-      rect: "img/Rect.png"
+	    channel: "img/Channel.png",
+	    round: "img/Round.png",
+	    rect: "img/Rect.png"
     },
+    allColumns: ['Designation', 'Mass', 'SectionDepth', 'SectionWidth', 'WebThickness', 'FlangeThickness', 'SectionArea', 'xMomentInertia', 'xElasticModulus', 'xPlasticModulus', 'xRadiusGyration', 'yMomentInertia', 'yElasticModulus', 'yPlasticModulus', 'yRadiusGyration'],
     columns: ['Designation', 'Mass', 'SectionDepth', 'SectionWidth', 'WebThickness', 'FlangeThickness', 'SectionArea', 'xMomentInertia', 'xElasticModulus', 'xPlasticModulus'],
     modal_rows: ['Mass', 'SectionDepth', 'SectionWidth', 'WebThickness', 'FlangeThickness', 'SectionArea', 'xMomentInertia', 'yMomentInertia', 'xElasticModulus', 'yElasticModulus', 'xPlasticModulus', 'yPlasticModulus'],
     units: {
@@ -915,6 +925,7 @@ var vm = new Vue({
       yPlasticModulus: "Z<sub>y</sub>"
     },
     modal_values: {},
+    chosen: {},
     euro_sections: [{
       text: 'HE Sections',
       value: 'HE'
@@ -982,12 +993,18 @@ var vm = new Vue({
     initialOrder: function() {
       var sortOrdersVar = {}
       var modalVar = {}
-      this.columns.forEach(function(key) {
+      var chosenVar = {}
+      this.allColumns.forEach(function(key) {
         sortOrdersVar[key] = 1
         modalVar[key] = ""
+        chosenVar[key] = false
+      })
+      this.columns.forEach(function(key) {
+        chosenVar[key] = true
       })
       this.sortOrders = sortOrdersVar
       this.modal_values = modalVar
+      this.chosen = chosenVar
     },
     sortBy: function(head) {
       this.sortKey = head
@@ -995,9 +1012,9 @@ var vm = new Vue({
     },
     loadModal: function(item) {
       var modalVar = {}
-      this.modal_image = item.Shape
-      this.modal_title = item.Designation
-      this.modal_rows.forEach(function(key) {
+      console.log[item['Shape']]
+      this.modal_image = item['Shape']
+      this.columns.forEach(function(key) {
         modalVar[key] = item[key]
       })
       this.modal_values = modalVar
@@ -1038,6 +1055,18 @@ var vm = new Vue({
         this.pageKey--
         this.offsetKey = this.pageKey * this.limitKey  
       }
+    },
+    toggleDropDown: function() {
+      this.showDrop = !this.showDrop
+    },
+    dropListClick: function(option) {
+      var index = this.columns.indexOf(option)
+      if(index === -1) {
+        this.columns.push(option)
+      } else {
+        this.columns.splice(index, 1)
+      }
+      this.chosen[option] = !this.chosen[option]
     }
   }
 })
